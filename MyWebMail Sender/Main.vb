@@ -4,7 +4,7 @@
     Dim ActualFilePath As String = Nothing
 
     Private Sub Main_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
+        Init()
     End Sub
 
 #Region "MenuTool1"
@@ -16,13 +16,17 @@
         End If
     End Sub
     Private Sub AbrirToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AbrirToolStripMenuItem.Click
-        OpenFile.Filter = "Todos los Archivos (*.*)|*.*"
-        OpenFile.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
-        OpenFile.Title = "Abrir Archivo..."
-        If OpenFile.ShowDialog() = DialogResult.OK Then
-            ActualFilePath = OpenFile.FileName
-            FastColoredTextBox1.Text = My.Computer.FileSystem.ReadAllText(OpenFile.FileName)
-        End If
+        Try
+            OpenFile.Filter = "Todos los Archivos (*.*)|*.*"
+            OpenFile.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
+            OpenFile.Title = "Abrir Archivo..."
+            If OpenFile.ShowDialog() = DialogResult.OK Then
+                ActualFilePath = OpenFile.FileName
+                FastColoredTextBox1.Text = My.Computer.FileSystem.ReadAllText(OpenFile.FileName)
+            End If
+        Catch ex As Exception
+            AddToLog("[AbrirToolStripMenuItem_Click@Main]", "Error: " & ex.Message, True)
+        End Try
     End Sub
     Private Sub GuardarToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles GuardarToolStripMenuItem.Click
         GuardarArchivo()
@@ -31,15 +35,19 @@
         GuardarArchivo()
     End Sub
     Sub GuardarArchivo()
-        SaveFile.Filter = "Todos los Archivos (*.*)|*.*"
-        SaveFile.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
-        SaveFile.Title = "Guardar Archivo..."
-        If ActualFilePath = Nothing Then
-            If SaveFile.ShowDialog() = DialogResult.OK Then
-                ActualFilePath = SaveFile.FileName
-                My.Computer.FileSystem.WriteAllText(SaveFile.FileName, FastColoredTextBox1.Text, False)
+        Try
+            SaveFile.Filter = "Todos los Archivos (*.*)|*.*"
+            SaveFile.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
+            SaveFile.Title = "Guardar Archivo..."
+            If ActualFilePath = Nothing Then
+                If SaveFile.ShowDialog() = DialogResult.OK Then
+                    ActualFilePath = SaveFile.FileName
+                    My.Computer.FileSystem.WriteAllText(SaveFile.FileName, FastColoredTextBox1.Text, False)
+                End If
             End If
-        End If
+        Catch ex As Exception
+            AddToLog("[GuardarArchivo@Main]", "Error: " & ex.Message, True)
+        End Try
     End Sub
     Private Sub SalirToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SalirToolStripMenuItem.Click
         End
@@ -103,13 +111,21 @@
     End Sub
 
     Sub SendOne()
-        Dim enviador As New Sender.OneSender
-        If MessageBox.Show("¿Seguro que desea enviar este correo a los destinatarios indicados?", "Confirmar Enviar", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
-            enviador.SendIt()
-        End If
+        Try
+            AddToLog("[Main]", "Sending one...")
+            Dim enviador As New MailSender.OneSender
+            If MessageBox.Show("¿Seguro que desea enviar este correo a los destinatarios indicados?", "Confirmar Enviar", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+                enviador.SendIt()
+            End If
+        Catch ex As Exception
+            AddToLog("[SendOne@Main]", "Error: " & ex.Message, True)
+        End Try
     End Sub
     Sub SendAll()
-        Dim enviador As New Sender.ManySender
-
+        'AddToLog("[Main]", "Sending many...")
+        'Dim enviador As New MailSender.ManySender
+        'If MessageBox.Show("¿Seguro que desea enviar este correo a todos los destinatarios?", "Confirmar Enviar", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+        '    enviador.SendIt()
+        'End If
     End Sub
 End Class
