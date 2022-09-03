@@ -13,6 +13,7 @@
 
     Private Sub EmailList_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LeerLista()
+        RefreshLabel()
     End Sub
     Private Sub EmailList_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
         GenerarLista()
@@ -33,63 +34,86 @@
         iCorreos = -1
     End Sub
     Private Sub Btn_Save_Click(sender As Object, e As EventArgs) Handles Btn_Save.Click
-        'Genera un nuevo item correo para agregarlo a ListaEmails
-        myCorreo = New Correo 'Crea el nuevo correo
+        Try
+            'Genera un nuevo item correo para agregarlo a ListaEmails
+            myCorreo = New Correo 'Crea el nuevo correo
 
-        myCorreo.ID = cCorreos
-        myCorreo.Email = Txb_Email.Text
-        myCorreo.Identification = Txb_Identification.Text
-        myCorreo.Password = Txb_Password.Text
+            myCorreo.ID = cCorreos
+            myCorreo.Email = Txb_Email.Text
+            myCorreo.Identification = Txb_Identification.Text
+            myCorreo.Password = Txb_Password.Text
 
-        myCorreo.Server = Txb_Server.Text
-        myCorreo.Type = Txb_Type.Text
-        myCorreo.Port = Txb_Port.Text
-        myCorreo.StatusSSL = Txb_StatusSSL.Text
+            myCorreo.Server = Txb_Server.Text
+            myCorreo.Type = Txb_Type.Text
+            myCorreo.Port = Txb_Port.Text
+            myCorreo.StatusSSL = Txb_StatusSSL.Text
 
-        Emails.Add(myCorreo) 'Agrega el correo a la lista
+            Emails.Add(myCorreo) 'Agrega el correo a la lista
 
-        cCorreos += 1 'Incrementa en 1 la cantidad.
+            cCorreos += 1 'Incrementa en 1 la cantidad.
+            Txb_ID.Text = cCorreos
 
-        GenerarLista() 'Guardar cambios
-        'CONSIDERACION: SE GENERA UN New Correo. por lo que un item seleccionado NO se sobreescribira. si no que se
-        'generara uno nuevo.
+            GenerarLista() 'Guardar cambios
+            'CONSIDERACION: SE GENERA UN New Correo. por lo que un item seleccionado NO se sobreescribira. si no que se
+            'generara uno nuevo.
+        Catch ex As Exception
+            AddToLog("GenerarLista@EmailList", "Error: " & ex.Message, True)
+        End Try
     End Sub
     Private Sub Btn_Remove_Click(sender As Object, e As EventArgs) Handles Btn_Remove.Click
-
+        Try
+            If MessageBox.Show("¿Seguro que desea eliminar el correo '" & iCorreos & ":" & Emails(iCorreos).Email & "'?", "Confirmar Eliminar", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+                myListaCorreos.Correos.RemoveAt(iCorreos)
+                Emails.RemoveAt(iCorreos)
+                MsgBox("Correo eliminado", MsgBoxStyle.Critical, "Lista de correos")
+                AddToLog("EmailList", "Email address deleted.")
+            End If
+        Catch ex As Exception
+            AddToLog("Btn_Remove_Click@EmailList", "Error: " & ex.Message, True)
+        End Try
     End Sub
 #End Region
 
     Sub GenerarLista()
-        myListaCorreos.AssemblyName = My.Application.Info.AssemblyName
-        myListaCorreos.AssemblyVersion = My.Application.Info.Version.ToString
+        Try
+            myListaCorreos.AssemblyName = My.Application.Info.AssemblyName
+            myListaCorreos.AssemblyVersion = My.Application.Info.Version.ToString
 
-        myListaCorreos.ProductVersion = Application.ProductVersion
-        myListaCorreos.Company = My.Application.Info.CompanyName
+            myListaCorreos.ProductVersion = Application.ProductVersion
+            myListaCorreos.Company = My.Application.Info.CompanyName
 
-        myListaCorreos.Author = Environment.UserName
-        myListaCorreos.DateCreated = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss")
+            myListaCorreos.Author = Environment.UserName
+            myListaCorreos.DateCreated = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss")
 
-        myListaCorreos.Correos = Emails
+            myListaCorreos.Correos = Emails
 
-        JSON_String = JSON_Conversor.Serialize(myListaCorreos)
+            JSON_String = JSON_Conversor.Serialize(myListaCorreos)
 
-        If My.Computer.FileSystem.FileExists(DIRCommons & "\EmailList.json") = True Then
-            My.Computer.FileSystem.DeleteFile(DIRCommons & "\EmailList.json")
-        End If
-        My.Computer.FileSystem.WriteAllText(DIRCommons & "\EmailList.json", JSON_String, False)
+            If My.Computer.FileSystem.FileExists(DIRCommons & "\EmailList.json") = True Then
+                My.Computer.FileSystem.DeleteFile(DIRCommons & "\EmailList.json")
+            End If
+            My.Computer.FileSystem.WriteAllText(DIRCommons & "\EmailList.json", JSON_String, False)
+            AddToLog("EmailList", "EmailList.json saved!")
 
-        LeerLista()
+            LeerLista()
+        Catch ex As Exception
+            AddToLog("GenerarLista@EmailList", "Error: " & ex.Message, True)
+        End Try
     End Sub
 
     Sub LeerLista()
-        If My.Computer.FileSystem.FileExists(DIRCommons & "\EmailList.json") = False Then
-            MsgBox("No hay una lista de correos.", MsgBoxStyle.Critical, "Lista de correos")
-            AddToLog("[EmailList]", "File EmailList.json doesn't exist.")
-        Else
-            myListaCorreos = JSON_Conversor.Deserialize(My.Computer.FileSystem.ReadAllText(DIRCommons & "\EmailList.json"), GetType(ListaEmails))
-            Emails = myListaCorreos.Correos
-            IndexToListBox()
-        End If
+        Try
+            If My.Computer.FileSystem.FileExists(DIRCommons & "\EmailList.json") = False Then
+                MsgBox("No hay una lista de correos.", MsgBoxStyle.Critical, "Lista de correos")
+                AddToLog("EmailList", "File EmailList.json doesn't exist.")
+            Else
+                myListaCorreos = JSON_Conversor.Deserialize(My.Computer.FileSystem.ReadAllText(DIRCommons & "\EmailList.json"), GetType(ListaEmails))
+                Emails = myListaCorreos.Correos
+                IndexToListBox()
+            End If
+        Catch ex As Exception
+            AddToLog("LeerLista@EmailList", "Error: " & ex.Message, True)
+        End Try
     End Sub
     Sub IndexToListBox()
         ListBox1.Items.Clear()
@@ -99,7 +123,6 @@
             ListBox1.Items.Add(correo.ID & ": " & correo.Email)
             cCorreos += 1
         Next
-        AddToLog("[EmailList]", "EmailList.json readed!")
     End Sub
 
 #Region "View y Select"
@@ -119,21 +142,27 @@
     End Sub
     Private Sub ListBox1_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles ListBox1.MouseDoubleClick
         'seleccionar
-        MailSender.MailInformation.emailFrom = myListaCorreos.Correos(iCorreos).Email
-        MailSender.MailInformation.emailIdentification = myListaCorreos.Correos(iCorreos).Identification
-        MailSender.MailInformation.emailPassword = myListaCorreos.Correos(iCorreos).Password
-        MailSender.MailInformation.emailServer = myListaCorreos.Correos(iCorreos).Server
-        MailSender.MailInformation.emailPort = myListaCorreos.Correos(iCorreos).Port
-        MailSender.MailInformation.SSLEnabled = myListaCorreos.Correos(iCorreos).StatusSSL
-        idCorreo = iCorreos
-        RefreshLabel()
+        SelectEmailAddress(iCorreos)
+    End Sub
+    Sub SelectEmailAddress(ByVal index As Integer)
+        Try
+            MailSender.MailInformation.emailFrom = myListaCorreos.Correos(index).Email
+            MailSender.MailInformation.emailIdentification = myListaCorreos.Correos(index).Identification
+            MailSender.MailInformation.emailPassword = myListaCorreos.Correos(index).Password
+            MailSender.MailInformation.emailServer = myListaCorreos.Correos(index).Server
+            MailSender.MailInformation.emailPort = myListaCorreos.Correos(index).Port
+            MailSender.MailInformation.SSLEnabled = myListaCorreos.Correos(index).StatusSSL
+            idCorreo = index
+            RefreshLabel()
+        Catch ex As Exception
+            AddToLog("SelectEmailAddress@EmailList", "Error: " & ex.Message, True)
+        End Try
     End Sub
     Sub RefreshLabel()
         Lbl_CurrentEmail.Text = "Actualmente en uso" &
-            vbCrLf & "    ID: " & idCorreo &
             vbCrLf & "    Correo: " & MailSender.MailInformation.emailFrom &
-            vbCrLf & "    Identificación: " & MailSender.MailInformation.emailIdentification &
-            vbCrLf & "    Contraseña: " & MailSender.MailInformation.emailPassword
+            vbCrLf & "    Identificación: " & MailSender.MailInformation.emailIdentification
+        AddToLog("EmailList", "Email provider selected!")
     End Sub
 #End Region
 End Class

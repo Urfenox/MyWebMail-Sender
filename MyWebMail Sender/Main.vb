@@ -25,7 +25,7 @@
                 FastColoredTextBox1.Text = My.Computer.FileSystem.ReadAllText(OpenFile.FileName)
             End If
         Catch ex As Exception
-            AddToLog("[AbrirToolStripMenuItem_Click@Main]", "Error: " & ex.Message, True)
+            AddToLog("AbrirToolStripMenuItem_Click@Main", "Error: " & ex.Message, True)
         End Try
     End Sub
     Private Sub GuardarToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles GuardarToolStripMenuItem.Click
@@ -46,7 +46,7 @@
                 End If
             End If
         Catch ex As Exception
-            AddToLog("[GuardarArchivo@Main]", "Error: " & ex.Message, True)
+            AddToLog("GuardarArchivo@Main", "Error: " & ex.Message, True)
         End Try
     End Sub
     Private Sub SalirToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SalirToolStripMenuItem.Click
@@ -56,22 +56,22 @@
 
 #Region "Editar"
     Private Sub DeshacerToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DeshacerToolStripMenuItem.Click
-
+        FastColoredTextBox1.Undo()
     End Sub
     Private Sub RehacerToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RehacerToolStripMenuItem.Click
-
+        FastColoredTextBox1.Redo()
     End Sub
     Private Sub CortarToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CortarToolStripMenuItem.Click
-
+        FastColoredTextBox1.Cut()
     End Sub
     Private Sub CopiarToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CopiarToolStripMenuItem.Click
-
+        FastColoredTextBox1.Copy()
     End Sub
     Private Sub PegarToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PegarToolStripMenuItem.Click
-
+        FastColoredTextBox1.Paste()
     End Sub
     Private Sub SeleccionartodoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SeleccionartodoToolStripMenuItem.Click
-
+        FastColoredTextBox1.SelectAll()
     End Sub
 #End Region
 
@@ -89,7 +89,8 @@
 
 #Region "Ayuda"
     Private Sub AcercadeToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AcercadeToolStripMenuItem.Click
-
+        AcercaDe.Show()
+        AcercaDe.Focus()
     End Sub
 #End Region
 #End Region
@@ -109,23 +110,38 @@
     Private Sub Btn_SendToAll_Click(sender As Object, e As EventArgs) Handles Btn_SendToAll.Click
         SendAll()
     End Sub
-
     Sub SendOne()
         Try
-            AddToLog("[Main]", "Sending one...")
-            Dim enviador As New MailSender.OneSender
-            If MessageBox.Show("¿Seguro que desea enviar este correo a los destinatarios indicados?", "Confirmar Enviar", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
-                enviador.SendIt()
+            If Txb_Subject.Text = Nothing Or FastColoredTextBox1.Text = Nothing Then
+                MsgBox("Faltan datos", MsgBoxStyle.Critical, "Datos Faltantes")
+            Else
+                If MailSender.emailFrom = Nothing Or MailSender.emailPassword = Nothing Then
+                    MsgBox("Correo de envio no indicado", MsgBoxStyle.Critical, "Datos Faltantes")
+                Else
+                    AddToLog("Main", "Sending one...")
+                    Dim enviador As New MailSender.OneSender(Txb_Subject.Text, FastColoredTextBox1.Text, TextBox1.Text, TextBox2.Text, TextBox3.Text)
+                    If MessageBox.Show("¿Seguro que desea enviar este correo a los destinatarios indicados?", "Confirmar Enviar", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+                        enviador.SendIt()
+                    End If
+                End If
             End If
         Catch ex As Exception
-            AddToLog("[SendOne@Main]", "Error: " & ex.Message, True)
+            AddToLog("SendOne@Main", "Error: " & ex.Message, True)
         End Try
     End Sub
     Sub SendAll()
-        'AddToLog("[Main]", "Sending many...")
-        'Dim enviador As New MailSender.ManySender
-        'If MessageBox.Show("¿Seguro que desea enviar este correo a todos los destinatarios?", "Confirmar Enviar", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
-        '    enviador.SendIt()
+        'If Txb_Subject.Text = Nothing Or FastColoredTextBox1.Text = Nothing Then
+        '    MsgBox("Faltan datos", MsgBoxStyle.Critical, "Datos Faltantes")
+        'Else
+        '    If MailSender.emailFrom = Nothing Or MailSender.emailPassword = Nothing Then
+        '        MsgBox("Correo de envio no indicado", MsgBoxStyle.Critical, "Datos Faltantes")
+        '    Else
+        '        AddToLog("Main", "Sending many...")
+        '        Dim enviador As New MailSender.ManySender
+        '        If MessageBox.Show("¿Seguro que desea enviar este correo a todos los destinatarios?", "Confirmar Enviar", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+        '            enviador.SendIt()
+        '        End If
+        '    End If
         'End If
     End Sub
 End Class

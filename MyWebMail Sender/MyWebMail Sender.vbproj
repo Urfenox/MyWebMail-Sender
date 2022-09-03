@@ -81,6 +81,12 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AcercaDe.designer.vb">
+      <DependentUpon>AcercaDe.vb</DependentUpon>
+    </Compile>
+    <Compile Include="AcercaDe.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="EmailList.Designer.vb">
       <DependentUpon>EmailList.vb</DependentUpon>
     </Compile>
@@ -119,6 +125,9 @@
     <Compile Include="Utility.vb" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="AcercaDe.resx">
+      <DependentUpon>AcercaDe.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="EmailList.resx">
       <DependentUpon>EmailList.vb</DependentUpon>
     </EmbeddedResource>

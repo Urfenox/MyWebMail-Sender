@@ -171,6 +171,7 @@ Partial Class ToEmailList
         Me.Controls.Add(Me.Panel2)
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.Label1)
+        Me.MinimumSize = New System.Drawing.Size(800, 500)
         Me.Name = "ToEmailList"
         Me.Text = "ToEmailList"
         Me.Panel4.ResumeLayout(False)
