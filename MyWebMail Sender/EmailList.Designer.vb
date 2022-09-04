@@ -67,7 +67,7 @@ Partial Class EmailList
         Me.ListBox1.Location = New System.Drawing.Point(0, 0)
         Me.ListBox1.Name = "ListBox1"
         Me.ListBox1.Size = New System.Drawing.Size(356, 333)
-        Me.ListBox1.TabIndex = 0
+        Me.ListBox1.TabIndex = 2
         '
         'Btn_New
         '
@@ -75,7 +75,7 @@ Partial Class EmailList
         Me.Btn_New.Location = New System.Drawing.Point(57, 11)
         Me.Btn_New.Name = "Btn_New"
         Me.Btn_New.Size = New System.Drawing.Size(75, 23)
-        Me.Btn_New.TabIndex = 9
+        Me.Btn_New.TabIndex = 11
         Me.Btn_New.Text = "Nuevo"
         Me.Btn_New.UseVisualStyleBackColor = True
         '
@@ -85,7 +85,7 @@ Partial Class EmailList
         Me.Btn_Save.Location = New System.Drawing.Point(138, 11)
         Me.Btn_Save.Name = "Btn_Save"
         Me.Btn_Save.Size = New System.Drawing.Size(75, 23)
-        Me.Btn_Save.TabIndex = 10
+        Me.Btn_Save.TabIndex = 12
         Me.Btn_Save.Text = "Guardar"
         Me.Btn_Save.UseVisualStyleBackColor = True
         '
@@ -95,7 +95,7 @@ Partial Class EmailList
         Me.Btn_Remove.Location = New System.Drawing.Point(219, 11)
         Me.Btn_Remove.Name = "Btn_Remove"
         Me.Btn_Remove.Size = New System.Drawing.Size(75, 23)
-        Me.Btn_Remove.TabIndex = 11
+        Me.Btn_Remove.TabIndex = 13
         Me.Btn_Remove.Text = "Eliminar"
         Me.Btn_Remove.UseVisualStyleBackColor = True
         '
@@ -105,7 +105,7 @@ Partial Class EmailList
         Me.Btn_Import.Location = New System.Drawing.Point(266, 3)
         Me.Btn_Import.Name = "Btn_Import"
         Me.Btn_Import.Size = New System.Drawing.Size(123, 23)
-        Me.Btn_Import.TabIndex = 20
+        Me.Btn_Import.TabIndex = 0
         Me.Btn_Import.Text = "Importar"
         Me.Btn_Import.UseVisualStyleBackColor = True
         '
@@ -115,7 +115,7 @@ Partial Class EmailList
         Me.Btn_Export.Location = New System.Drawing.Point(395, 3)
         Me.Btn_Export.Name = "Btn_Export"
         Me.Btn_Export.Size = New System.Drawing.Size(123, 23)
-        Me.Btn_Export.TabIndex = 30
+        Me.Btn_Export.TabIndex = 1
         Me.Btn_Export.Text = "Exportar"
         Me.Btn_Export.UseVisualStyleBackColor = True
         '
@@ -180,14 +180,14 @@ Partial Class EmailList
         Me.Txb_Server.Location = New System.Drawing.Point(109, 18)
         Me.Txb_Server.Name = "Txb_Server"
         Me.Txb_Server.Size = New System.Drawing.Size(229, 20)
-        Me.Txb_Server.TabIndex = 5
+        Me.Txb_Server.TabIndex = 7
         '
         'Txb_StatusSSL
         '
         Me.Txb_StatusSSL.Location = New System.Drawing.Point(109, 96)
         Me.Txb_StatusSSL.Name = "Txb_StatusSSL"
         Me.Txb_StatusSSL.Size = New System.Drawing.Size(229, 20)
-        Me.Txb_StatusSSL.TabIndex = 8
+        Me.Txb_StatusSSL.TabIndex = 10
         '
         'Label8
         '
@@ -212,14 +212,14 @@ Partial Class EmailList
         Me.Txb_Type.Location = New System.Drawing.Point(109, 44)
         Me.Txb_Type.Name = "Txb_Type"
         Me.Txb_Type.Size = New System.Drawing.Size(229, 20)
-        Me.Txb_Type.TabIndex = 6
+        Me.Txb_Type.TabIndex = 8
         '
         'Txb_Port
         '
         Me.Txb_Port.Location = New System.Drawing.Point(109, 70)
         Me.Txb_Port.Name = "Txb_Port"
         Me.Txb_Port.Size = New System.Drawing.Size(229, 20)
-        Me.Txb_Port.TabIndex = 7
+        Me.Txb_Port.TabIndex = 9
         '
         'Label9
         '
@@ -273,7 +273,7 @@ Partial Class EmailList
         Me.Txb_ID.Location = New System.Drawing.Point(108, 18)
         Me.Txb_ID.Name = "Txb_ID"
         Me.Txb_ID.Size = New System.Drawing.Size(231, 20)
-        Me.Txb_ID.TabIndex = 1
+        Me.Txb_ID.TabIndex = 3
         '
         'Label4
         '
@@ -290,7 +290,7 @@ Partial Class EmailList
         Me.Txb_Email.Location = New System.Drawing.Point(108, 44)
         Me.Txb_Email.Name = "Txb_Email"
         Me.Txb_Email.Size = New System.Drawing.Size(231, 20)
-        Me.Txb_Email.TabIndex = 2
+        Me.Txb_Email.TabIndex = 4
         '
         'Label5
         '
@@ -307,7 +307,7 @@ Partial Class EmailList
         Me.Txb_Identification.Location = New System.Drawing.Point(108, 70)
         Me.Txb_Identification.Name = "Txb_Identification"
         Me.Txb_Identification.Size = New System.Drawing.Size(231, 20)
-        Me.Txb_Identification.TabIndex = 3
+        Me.Txb_Identification.TabIndex = 5
         '
         'Label6
         '
@@ -323,7 +323,7 @@ Partial Class EmailList
         Me.Txb_Password.Location = New System.Drawing.Point(108, 96)
         Me.Txb_Password.Name = "Txb_Password"
         Me.Txb_Password.Size = New System.Drawing.Size(231, 20)
-        Me.Txb_Password.TabIndex = 4
+        Me.Txb_Password.TabIndex = 6
         '
         'Lbl_CurrentEmail
         '

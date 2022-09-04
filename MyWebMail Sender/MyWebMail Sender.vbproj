@@ -87,6 +87,7 @@
     <Compile Include="AcercaDe.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="ApplicationEvents.vb" />
     <Compile Include="EmailList.Designer.vb">
       <DependentUpon>EmailList.vb</DependentUpon>
     </Compile>

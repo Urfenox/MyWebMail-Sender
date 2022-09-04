@@ -6,6 +6,12 @@
     Private Sub Main_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Init()
     End Sub
+    Private Sub Main_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
+    End Sub
+    Private Sub Main_HelpRequested(sender As Object, hlpevent As HelpEventArgs) Handles Me.HelpRequested
+        AcercaDe.Show()
+        AcercaDe.Focus()
+    End Sub
 
 #Region "MenuTool1"
 #Region "Archivo"
@@ -89,8 +95,7 @@
 
 #Region "Ayuda"
     Private Sub AcercadeToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AcercadeToolStripMenuItem.Click
-        AcercaDe.Show()
-        AcercaDe.Focus()
+        AcercaDe.ShowDialog()
     End Sub
 #End Region
 #End Region
@@ -119,7 +124,7 @@
                     MsgBox("Correo de envio no indicado", MsgBoxStyle.Critical, "Datos Faltantes")
                 Else
                     AddToLog("Main", "Sending one...")
-                    Dim enviador As New MailSender.OneSender(Txb_Subject.Text, FastColoredTextBox1.Text, TextBox1.Text, TextBox2.Text, TextBox3.Text)
+                    Dim enviador As New MailSender.OneSender(Txb_Subject.Text, FastColoredTextBox1.Text, Txb_Addressee.Text, Txb_AddresseeBCC.Text, Txb_AddresseeCC.Text)
                     If MessageBox.Show("¿Seguro que desea enviar este correo a los destinatarios indicados?", "Confirmar Enviar", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
                         enviador.SendIt()
                     End If

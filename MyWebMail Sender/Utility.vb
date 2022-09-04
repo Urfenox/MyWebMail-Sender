@@ -25,7 +25,6 @@
 End Module
 Module StartUp
     Sub Init()
-        AddToLog("Init", My.Application.Info.AssemblyName & " " & My.Application.Info.Version.ToString & " (" & My.Application.Info.Version.ToString & ")" & " has started! " & DateTime.Now.ToString("hh:mm:ss tt dd/MM/yyyy"), True)
         CommonActions()
     End Sub
     Sub CommonActions()
