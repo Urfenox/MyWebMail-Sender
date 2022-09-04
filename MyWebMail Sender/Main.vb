@@ -135,18 +135,16 @@
         End Try
     End Sub
     Sub SendAll()
-        'If Txb_Subject.Text = Nothing Or FastColoredTextBox1.Text = Nothing Then
-        '    MsgBox("Faltan datos", MsgBoxStyle.Critical, "Datos Faltantes")
-        'Else
-        '    If MailSender.emailFrom = Nothing Or MailSender.emailPassword = Nothing Then
-        '        MsgBox("Correo de envio no indicado", MsgBoxStyle.Critical, "Datos Faltantes")
-        '    Else
-        '        AddToLog("Main", "Sending many...")
-        '        Dim enviador As New MailSender.ManySender
-        '        If MessageBox.Show("¿Seguro que desea enviar este correo a todos los destinatarios?", "Confirmar Enviar", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
-        '            enviador.SendIt()
-        '        End If
-        '    End If
-        'End If
+        If Txb_Subject.Text = Nothing Or FastColoredTextBox1.Text = Nothing Then
+            MsgBox("Faltan datos", MsgBoxStyle.Critical, "Datos Faltantes")
+        Else
+            If MailSender.emailFrom = Nothing Or MailSender.emailPassword = Nothing Then
+                MsgBox("Correo de envio no indicado", MsgBoxStyle.Critical, "Datos Faltantes")
+            Else
+                AddToLog("Main", "Sending many...")
+                Dim enviador As New MailSender.ManySender(Txb_Subject.Text, FastColoredTextBox1.Text)
+                enviador.SendAdmin()
+            End If
+        End If
     End Sub
 End Class
