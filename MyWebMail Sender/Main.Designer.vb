@@ -45,10 +45,16 @@ Partial Class Main
         Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripSeparator()
         Me.LenguajeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.HerramientasToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.VisaPreviaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem3 = New System.Windows.Forms.ToolStripSeparator()
         Me.PersonalizarToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.OpcionesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator()
         Me.ConfiguraciónToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem4 = New System.Windows.Forms.ToolStripSeparator()
+        Me.SesiónToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.CargarToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.GuardarToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.AyudaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AcercadeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.Panel2 = New System.Windows.Forms.Panel()
@@ -93,7 +99,7 @@ Partial Class Main
         Me.NuevoToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.NuevoToolStripMenuItem.Name = "NuevoToolStripMenuItem"
         Me.NuevoToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.N), System.Windows.Forms.Keys)
-        Me.NuevoToolStripMenuItem.Size = New System.Drawing.Size(156, 22)
+        Me.NuevoToolStripMenuItem.Size = New System.Drawing.Size(213, 22)
         Me.NuevoToolStripMenuItem.Text = "&Nuevo"
         '
         'AbrirToolStripMenuItem
@@ -102,13 +108,13 @@ Partial Class Main
         Me.AbrirToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.AbrirToolStripMenuItem.Name = "AbrirToolStripMenuItem"
         Me.AbrirToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.O), System.Windows.Forms.Keys)
-        Me.AbrirToolStripMenuItem.Size = New System.Drawing.Size(156, 22)
+        Me.AbrirToolStripMenuItem.Size = New System.Drawing.Size(213, 22)
         Me.AbrirToolStripMenuItem.Text = "&Abrir"
         '
         'toolStripSeparator
         '
         Me.toolStripSeparator.Name = "toolStripSeparator"
-        Me.toolStripSeparator.Size = New System.Drawing.Size(153, 6)
+        Me.toolStripSeparator.Size = New System.Drawing.Size(210, 6)
         '
         'GuardarToolStripMenuItem
         '
@@ -116,24 +122,26 @@ Partial Class Main
         Me.GuardarToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.GuardarToolStripMenuItem.Name = "GuardarToolStripMenuItem"
         Me.GuardarToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.S), System.Windows.Forms.Keys)
-        Me.GuardarToolStripMenuItem.Size = New System.Drawing.Size(156, 22)
+        Me.GuardarToolStripMenuItem.Size = New System.Drawing.Size(213, 22)
         Me.GuardarToolStripMenuItem.Text = "&Guardar"
         '
         'GuardarcomoToolStripMenuItem
         '
         Me.GuardarcomoToolStripMenuItem.Name = "GuardarcomoToolStripMenuItem"
-        Me.GuardarcomoToolStripMenuItem.Size = New System.Drawing.Size(156, 22)
+        Me.GuardarcomoToolStripMenuItem.ShortcutKeys = CType(((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Alt) _
+            Or System.Windows.Forms.Keys.S), System.Windows.Forms.Keys)
+        Me.GuardarcomoToolStripMenuItem.Size = New System.Drawing.Size(213, 22)
         Me.GuardarcomoToolStripMenuItem.Text = "G&uardar como"
         '
         'toolStripSeparator2
         '
         Me.toolStripSeparator2.Name = "toolStripSeparator2"
-        Me.toolStripSeparator2.Size = New System.Drawing.Size(153, 6)
+        Me.toolStripSeparator2.Size = New System.Drawing.Size(210, 6)
         '
         'SalirToolStripMenuItem
         '
         Me.SalirToolStripMenuItem.Name = "SalirToolStripMenuItem"
-        Me.SalirToolStripMenuItem.Size = New System.Drawing.Size(156, 22)
+        Me.SalirToolStripMenuItem.Size = New System.Drawing.Size(213, 22)
         Me.SalirToolStripMenuItem.Text = "&Salir"
         '
         'EditarToolStripMenuItem
@@ -214,20 +222,32 @@ Partial Class Main
         '
         'HerramientasToolStripMenuItem
         '
-        Me.HerramientasToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PersonalizarToolStripMenuItem, Me.OpcionesToolStripMenuItem, Me.ToolStripMenuItem1, Me.ConfiguraciónToolStripMenuItem})
-        Me.HerramientasToolStripMenuItem.Enabled = False
+        Me.HerramientasToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.VisaPreviaToolStripMenuItem, Me.ToolStripMenuItem3, Me.PersonalizarToolStripMenuItem, Me.OpcionesToolStripMenuItem, Me.ToolStripMenuItem1, Me.ConfiguraciónToolStripMenuItem, Me.ToolStripMenuItem4, Me.SesiónToolStripMenuItem})
         Me.HerramientasToolStripMenuItem.Name = "HerramientasToolStripMenuItem"
         Me.HerramientasToolStripMenuItem.Size = New System.Drawing.Size(90, 20)
         Me.HerramientasToolStripMenuItem.Text = "&Herramientas"
         '
+        'VisaPreviaToolStripMenuItem
+        '
+        Me.VisaPreviaToolStripMenuItem.Name = "VisaPreviaToolStripMenuItem"
+        Me.VisaPreviaToolStripMenuItem.Size = New System.Drawing.Size(150, 22)
+        Me.VisaPreviaToolStripMenuItem.Text = "Visa previa"
+        '
+        'ToolStripMenuItem3
+        '
+        Me.ToolStripMenuItem3.Name = "ToolStripMenuItem3"
+        Me.ToolStripMenuItem3.Size = New System.Drawing.Size(147, 6)
+        '
         'PersonalizarToolStripMenuItem
         '
+        Me.PersonalizarToolStripMenuItem.Enabled = False
         Me.PersonalizarToolStripMenuItem.Name = "PersonalizarToolStripMenuItem"
         Me.PersonalizarToolStripMenuItem.Size = New System.Drawing.Size(150, 22)
         Me.PersonalizarToolStripMenuItem.Text = "&Personalizar"
         '
         'OpcionesToolStripMenuItem
         '
+        Me.OpcionesToolStripMenuItem.Enabled = False
         Me.OpcionesToolStripMenuItem.Name = "OpcionesToolStripMenuItem"
         Me.OpcionesToolStripMenuItem.Size = New System.Drawing.Size(150, 22)
         Me.OpcionesToolStripMenuItem.Text = "&Opciones"
@@ -239,9 +259,35 @@ Partial Class Main
         '
         'ConfiguraciónToolStripMenuItem
         '
+        Me.ConfiguraciónToolStripMenuItem.Enabled = False
         Me.ConfiguraciónToolStripMenuItem.Name = "ConfiguraciónToolStripMenuItem"
         Me.ConfiguraciónToolStripMenuItem.Size = New System.Drawing.Size(150, 22)
         Me.ConfiguraciónToolStripMenuItem.Text = "&Configuración"
+        '
+        'ToolStripMenuItem4
+        '
+        Me.ToolStripMenuItem4.Name = "ToolStripMenuItem4"
+        Me.ToolStripMenuItem4.Size = New System.Drawing.Size(147, 6)
+        '
+        'SesiónToolStripMenuItem
+        '
+        Me.SesiónToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CargarToolStripMenuItem, Me.GuardarToolStripMenuItem1})
+        Me.SesiónToolStripMenuItem.Enabled = False
+        Me.SesiónToolStripMenuItem.Name = "SesiónToolStripMenuItem"
+        Me.SesiónToolStripMenuItem.Size = New System.Drawing.Size(150, 22)
+        Me.SesiónToolStripMenuItem.Text = "Sesión"
+        '
+        'CargarToolStripMenuItem
+        '
+        Me.CargarToolStripMenuItem.Name = "CargarToolStripMenuItem"
+        Me.CargarToolStripMenuItem.Size = New System.Drawing.Size(116, 22)
+        Me.CargarToolStripMenuItem.Text = "Cargar"
+        '
+        'GuardarToolStripMenuItem1
+        '
+        Me.GuardarToolStripMenuItem1.Name = "GuardarToolStripMenuItem1"
+        Me.GuardarToolStripMenuItem1.Size = New System.Drawing.Size(116, 22)
+        Me.GuardarToolStripMenuItem1.Text = "Guardar"
         '
         'AyudaToolStripMenuItem
         '
@@ -263,7 +309,7 @@ Partial Class Main
         Me.Panel2.Controls.Add(Me.Btn_SendToAll)
         Me.Panel2.Controls.Add(Me.Btn_Send)
         Me.Panel2.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Panel2.Location = New System.Drawing.Point(0, 545)
+        Me.Panel2.Location = New System.Drawing.Point(0, 555)
         Me.Panel2.Name = "Panel2"
         Me.Panel2.Size = New System.Drawing.Size(784, 56)
         Me.Panel2.TabIndex = 2
@@ -414,7 +460,7 @@ Partial Class Main
         Me.FastColoredTextBox1.RightBracket2 = Global.Microsoft.VisualBasic.ChrW(41)
         Me.FastColoredTextBox1.SelectionColor = System.Drawing.Color.FromArgb(CType(CType(60, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.FastColoredTextBox1.ServiceColors = CType(resources.GetObject("FastColoredTextBox1.ServiceColors"), FastColoredTextBoxNS.ServiceColors)
-        Me.FastColoredTextBox1.Size = New System.Drawing.Size(760, 434)
+        Me.FastColoredTextBox1.Size = New System.Drawing.Size(760, 444)
         Me.FastColoredTextBox1.TabIndex = 8
         Me.FastColoredTextBox1.Zoom = 100
         '
@@ -422,7 +468,7 @@ Partial Class Main
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(784, 601)
+        Me.ClientSize = New System.Drawing.Size(784, 611)
         Me.Controls.Add(Me.FastColoredTextBox1)
         Me.Controls.Add(Me.Txb_AddresseeCC)
         Me.Controls.Add(Me.Lbl_AddresseeCC)
@@ -491,4 +537,10 @@ Partial Class Main
     Friend WithEvents Txb_AddresseeCC As TextBox
     Friend WithEvents Lbl_AddresseeCC As Label
     Friend WithEvents FastColoredTextBox1 As FastColoredTextBoxNS.FastColoredTextBox
+    Friend WithEvents VisaPreviaToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ToolStripMenuItem3 As ToolStripSeparator
+    Friend WithEvents ToolStripMenuItem4 As ToolStripSeparator
+    Friend WithEvents SesiónToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents CargarToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents GuardarToolStripMenuItem1 As ToolStripMenuItem
 End Class

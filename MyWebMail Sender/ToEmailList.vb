@@ -1,5 +1,5 @@
 ﻿Public Class ToEmailList
-    Public filePath As String = DIRCommons & "\ToEmailList.json"
+    Public filePath As String = Utilidades.DIRCommons & "\ToEmailList.json"
     Dim myListaCorreos As New ListaToEmails 'Objeto principal
     Dim Emails As New List(Of ParaCorreo) 'Lista de correos para embeber dentro del 'Objeto principal'
     Dim myCorreo As ParaCorreo 'Correo para agregar a la 'Lista de correos'
@@ -12,6 +12,7 @@
 
     Private Sub ToEmailList_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LeerLista()
+        Txb_ID.Text = cCorreos
     End Sub
 
     Private Sub ToEmailList_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
@@ -26,7 +27,7 @@
         Txb_ID.Clear()
         Txb_Email.Clear()
         Txb_Identification.Clear()
-
+        Txb_ID.Text = cCorreos
         NoCorreoSelected()
     End Sub
     Private Sub Btn_Save_Click(sender As Object, e As EventArgs) Handles Btn_Save.Click
@@ -55,7 +56,7 @@
             'CONSIDERACION: SE GENERA UN New Correo. por lo que un item seleccionado NO se sobreescribira. si no que se
             'generara uno nuevo.
         Catch ex As Exception
-            AddToLog("Btn_Save_Click@ToEmailList", "Error: " & ex.Message, True)
+            Utilidades.AddToLog("Btn_Save_Click@ToEmailList", "Error: " & ex.Message, True)
         End Try
     End Sub
     Private Sub Btn_Remove_Click(sender As Object, e As EventArgs) Handles Btn_Remove.Click
@@ -64,10 +65,10 @@
                 myListaCorreos.Correos.RemoveAt(iCorreos)
                 Emails.RemoveAt(iCorreos)
                 MsgBox("Correo eliminado", MsgBoxStyle.Critical, "Lista de correos")
-                AddToLog("ToEmailList", "Email address deleted.")
+                Utilidades.AddToLog("ToEmailList", "Email address deleted.")
             End If
         Catch ex As Exception
-            AddToLog("Btn_Remove_Click@ToEmailList", "Error: " & ex.Message, True)
+            Utilidades.AddToLog("Btn_Remove_Click@ToEmailList", "Error: " & ex.Message, True)
         End Try
     End Sub
 
@@ -76,10 +77,11 @@
             'Obtiene lo que el usuario da y mezcla la copia con el JSON actual
             Dim openFile As New OpenFileDialog
             openFile.Filter = "Archivo JSON (*.json)|*.json|Todos los archivos (*.*)|*.*"
-            openFile.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
+            openFile.InitialDirectory = Utilidades.Memory.ToEmailList_ImportPath
             openFile.Title = "Importar archivo..."
-            openFile.FileName = IO.Path.GetFileName(filePath)
+            openFile.FileName = "ToEmailList.json"
             If openFile.ShowDialog() = DialogResult.OK Then
+                Utilidades.Memory.ToEmailList_ImportPath = IO.Path.GetDirectoryName(openFile.FileName)
                 Dim importLista As ListaToEmails
                 importLista = JSON_Conversor.Deserialize(My.Computer.FileSystem.ReadAllText(openFile.FileName), GetType(ListaToEmails))
                 Dim importCorreos = importLista.Correos
@@ -110,7 +112,7 @@
                 End If
             End If
         Catch ex As Exception
-            AddToLog("Btn_Import_Click@ToEmailList", "Error: " & ex.Message, True)
+            Utilidades.AddToLog("Btn_Import_Click@ToEmailList", "Error: " & ex.Message, True)
         End Try
     End Sub
     Private Sub Btn_Export_Click(sender As Object, e As EventArgs) Handles Btn_Export.Click
@@ -118,20 +120,21 @@
             'Guarda lo que ya existe y pide al usuario en donde guardar la copia del JSON
             Dim saveFile As New SaveFileDialog
             saveFile.Filter = "Archivo JSON (*.json)|*.json|Todos los archivos (*.*)|*.*"
-            saveFile.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
+            saveFile.InitialDirectory = Utilidades.Memory.ToEmailList_ExportPath
             saveFile.Title = "Exportar archivo..."
-            saveFile.FileName = IO.Path.GetFileName(filePath)
+            saveFile.FileName = "ToEmailList.json"
             If saveFile.ShowDialog() = DialogResult.OK Then
+                Utilidades.Memory.ToEmailList_ExportPath = IO.Path.GetDirectoryName(saveFile.FileName)
                 GenerarLista() 'guarda
                 If My.Computer.FileSystem.FileExists(saveFile.FileName) = True Then
                     My.Computer.FileSystem.DeleteFile(saveFile.FileName)
                 End If
                 My.Computer.FileSystem.WriteAllText(saveFile.FileName, JSON_String, False)
-                AddToLog("ToEmailList", "ToEmailList.json exported!")
+                Utilidades.AddToLog("ToEmailList", "ToEmailList.json exported!")
                 MsgBox("Exportación exitosa", MsgBoxStyle.Information, "Exportación")
             End If
         Catch ex As Exception
-            AddToLog("Btn_Export_Click@ToEmailList", "Error: " & ex.Message, True)
+            Utilidades.AddToLog("Btn_Export_Click@ToEmailList", "Error: " & ex.Message, True)
         End Try
     End Sub
 #End Region
@@ -155,11 +158,11 @@
                 My.Computer.FileSystem.DeleteFile(filePath)
             End If
             My.Computer.FileSystem.WriteAllText(filePath, JSON_String, False)
-            AddToLog("ToEmailList", "ToEmailList.json saved!")
+            Utilidades.AddToLog("ToEmailList", "ToEmailList.json saved!")
 
             LeerLista()
         Catch ex As Exception
-            AddToLog("GenerarLista@ToEmailList", "Error: " & ex.Message, True)
+            Utilidades.AddToLog("GenerarLista@ToEmailList", "Error: " & ex.Message, True)
         End Try
     End Sub
 
@@ -167,14 +170,14 @@
         Try
             If My.Computer.FileSystem.FileExists(filePath) = False Then
                 MsgBox("No hay una lista de correos.", MsgBoxStyle.Critical, "Lista de correos")
-                AddToLog("ToEmailList", "File ToEmailList.json doesn't exist.")
+                Utilidades.AddToLog("ToEmailList", "File ToEmailList.json doesn't exist.")
             Else
                 myListaCorreos = JSON_Conversor.Deserialize(My.Computer.FileSystem.ReadAllText(filePath), GetType(ListaToEmails))
                 Emails = myListaCorreos.Correos
                 IndexToListBox()
             End If
         Catch ex As Exception
-            AddToLog("LeerLista@ToEmailList", "Error: " & ex.Message, True)
+            Utilidades.AddToLog("LeerLista@ToEmailList", "Error: " & ex.Message, True)
         End Try
     End Sub
     Sub IndexToListBox()
@@ -187,7 +190,7 @@
                 cCorreos += 1
             Next
         Catch ex As Exception
-            AddToLog("IndexToListBox@ToEmailList", "Error: " & ex.Message, True)
+            Utilidades.AddToLog("IndexToListBox@ToEmailList", "Error: " & ex.Message, True)
         End Try
     End Sub
 
@@ -205,7 +208,7 @@
                 Txb_Identification.Text = myListaCorreos.Correos(iCorreos).Name
             End If
         Catch ex As Exception
-            AddToLog("ListBox1_MouseClick@ToEmailList", "Error: " & ex.Message, True)
+            Utilidades.AddToLog("ListBox1_MouseClick@ToEmailList", "Error: " & ex.Message, True)
         End Try
     End Sub
     Private Sub ListBox1_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles ListBox1.MouseDoubleClick
@@ -220,9 +223,9 @@
             Else
                 Main.Txb_Addressee.Text &= ";" & myListaCorreos.Correos(index).Email
             End If
-            AddToLog("ToEmailList", "Email addressee selected!")
+            Utilidades.AddToLog("ToEmailList", "Email addressee selected!")
         Catch ex As Exception
-            AddToLog("SelectEmailAddress@ToEmailList", "Error: " & ex.Message, True)
+            Utilidades.AddToLog("SelectEmailAddress@ToEmailList", "Error: " & ex.Message, True)
         End Try
     End Sub
     Sub NoCorreoSelected()

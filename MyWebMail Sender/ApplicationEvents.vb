@@ -8,11 +8,12 @@ Namespace My
     ' NetworkAvailabilityChanged: Se genera cuando se conecta o desconecta la conexión de red.
     Partial Friend Class MyApplication
         Private Sub MyApplication_Shutdown(sender As Object, e As EventArgs) Handles Me.Shutdown
-            AddToLog("Event", My.Application.Info.AssemblyName & " " & My.Application.Info.Version.ToString & " (" & System.Windows.Forms.Application.ProductVersion & ")" & " has finished! " & DateTime.Now.ToString("hh:mm:ss tt dd/MM/yyyy"), True)
+            Utilidades.SaveConfig()
+            Utilidades.AddToLog("Event", My.Application.Info.AssemblyName & " " & My.Application.Info.Version.ToString & " (" & System.Windows.Forms.Application.ProductVersion & ")" & " has finished! " & DateTime.Now.ToString("hh:mm:ss tt dd/MM/yyyy"), True)
         End Sub
 
         Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
-            AddToLog("Event", My.Application.Info.AssemblyName & " " & My.Application.Info.Version.ToString & " (" & System.Windows.Forms.Application.ProductVersion & ")" & " has started! " & DateTime.Now.ToString("hh:mm:ss tt dd/MM/yyyy"), True)
+            Utilidades.AddToLog("Event", My.Application.Info.AssemblyName & " " & My.Application.Info.Version.ToString & " (" & System.Windows.Forms.Application.ProductVersion & ")" & " has started! " & DateTime.Now.ToString("hh:mm:ss tt dd/MM/yyyy"), True)
         End Sub
 
         Private Sub MyApplication_StartupNextInstance(sender As Object, e As StartupNextInstanceEventArgs) Handles Me.StartupNextInstance
@@ -20,7 +21,7 @@ Namespace My
         End Sub
 
         Private Sub MyApplication_UnhandledException(sender As Object, e As UnhandledExceptionEventArgs) Handles Me.UnhandledException
-            AddToLog("Event", e.Exception.Data.Count & vbCrLf & e.Exception.InnerException.ToString & vbCrLf & e.Exception.Message & vbCrLf & e.Exception.Source & vbCrLf & e.Exception.StackTrace & vbCrLf & e.Exception.TargetSite.Name & vbCrLf & e.Exception.HelpLink, True)
+            Utilidades.AddToLog("Event", e.Exception.Data.Count & vbCrLf & e.Exception.InnerException.ToString & vbCrLf & e.Exception.Message & vbCrLf & e.Exception.Source & vbCrLf & e.Exception.StackTrace & vbCrLf & e.Exception.TargetSite.Name & vbCrLf & e.Exception.HelpLink, True)
         End Sub
     End Class
 End Namespace

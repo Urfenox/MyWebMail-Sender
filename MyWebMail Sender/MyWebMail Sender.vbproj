@@ -94,6 +94,12 @@
     <Compile Include="EmailList.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="HTML Preview.Designer.vb">
+      <DependentUpon>HTML Preview.vb</DependentUpon>
+    </Compile>
+    <Compile Include="HTML Preview.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Main.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -131,6 +137,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="EmailList.resx">
       <DependentUpon>EmailList.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HTML Preview.resx">
+      <DependentUpon>HTML Preview.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.vb</DependentUpon>

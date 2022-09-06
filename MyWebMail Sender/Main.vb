@@ -4,7 +4,7 @@
     Dim ActualFilePath As String = Nothing
 
     Private Sub Main_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Init()
+        Utilidades.Init()
     End Sub
     Private Sub Main_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
     End Sub
@@ -24,35 +24,39 @@
     Private Sub AbrirToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AbrirToolStripMenuItem.Click
         Try
             OpenFile.Filter = "Todos los Archivos (*.*)|*.*"
-            OpenFile.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
+            OpenFile.InitialDirectory = Utilidades.Memory.Main_OpenPath
             OpenFile.Title = "Abrir Archivo..."
             If OpenFile.ShowDialog() = DialogResult.OK Then
                 ActualFilePath = OpenFile.FileName
+                Utilidades.Memory.Main_OpenPath = IO.Path.GetDirectoryName(OpenFile.FileName)
                 FastColoredTextBox1.Text = My.Computer.FileSystem.ReadAllText(OpenFile.FileName)
             End If
         Catch ex As Exception
-            AddToLog("AbrirToolStripMenuItem_Click@Main", "Error: " & ex.Message, True)
+            Utilidades.AddToLog("AbrirToolStripMenuItem_Click@Main", "Error: " & ex.Message, True)
         End Try
     End Sub
     Private Sub GuardarToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles GuardarToolStripMenuItem.Click
         GuardarArchivo()
     End Sub
     Private Sub GuardarcomoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles GuardarcomoToolStripMenuItem.Click
-        GuardarArchivo()
+        GuardarArchivo(True)
     End Sub
-    Sub GuardarArchivo()
+    Sub GuardarArchivo(Optional ByVal IsSaveAs As Boolean = False)
         Try
             SaveFile.Filter = "Todos los Archivos (*.*)|*.*"
-            SaveFile.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
+            SaveFile.InitialDirectory = Utilidades.Memory.Main_SavePath
             SaveFile.Title = "Guardar Archivo..."
-            If ActualFilePath = Nothing Then
+            If IsSaveAs Then
                 If SaveFile.ShowDialog() = DialogResult.OK Then
                     ActualFilePath = SaveFile.FileName
+                    Utilidades.Memory.Main_SavePath = IO.Path.GetDirectoryName(SaveFile.FileName)
                     My.Computer.FileSystem.WriteAllText(SaveFile.FileName, FastColoredTextBox1.Text, False)
                 End If
+            Else
+                My.Computer.FileSystem.WriteAllText(OpenFile.FileName, FastColoredTextBox1.Text, False)
             End If
         Catch ex As Exception
-            AddToLog("GuardarArchivo@Main", "Error: " & ex.Message, True)
+            Utilidades.AddToLog("GuardarArchivo@Main", "Error: " & ex.Message, True)
         End Try
     End Sub
     Private Sub SalirToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SalirToolStripMenuItem.Click
@@ -82,6 +86,10 @@
 #End Region
 
 #Region "Herramientas"
+    Private Sub VisaPreviaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles VisaPreviaToolStripMenuItem.Click
+        HTML_Preview.Show()
+        HTML_Preview.Focus()
+    End Sub
     Private Sub PersonalizarToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PersonalizarToolStripMenuItem.Click
 
     End Sub
@@ -123,15 +131,17 @@
                 If MailSender.emailFrom = Nothing Or MailSender.emailPassword = Nothing Then
                     MsgBox("Correo de envio no indicado", MsgBoxStyle.Critical, "Datos Faltantes")
                 Else
-                    AddToLog("Main", "Sending one...")
+                    Utilidades.AddToLog("Main", "Sending one...")
                     Dim enviador As New MailSender.OneSender(Txb_Subject.Text, FastColoredTextBox1.Text, Txb_Addressee.Text, Txb_AddresseeBCC.Text, Txb_AddresseeCC.Text)
+                    'Dim threadSend = New Threading.Thread(Sub() enviador.SendIt())
                     If MessageBox.Show("¿Seguro que desea enviar este correo a los destinatarios indicados?", "Confirmar Enviar", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+                        'threadSend.Start()
                         enviador.SendIt()
                     End If
                 End If
             End If
         Catch ex As Exception
-            AddToLog("SendOne@Main", "Error: " & ex.Message, True)
+            Utilidades.AddToLog("SendOne@Main", "Error: " & ex.Message, True)
         End Try
     End Sub
     Sub SendAll()
@@ -141,10 +151,32 @@
             If MailSender.emailFrom = Nothing Or MailSender.emailPassword = Nothing Then
                 MsgBox("Correo de envio no indicado", MsgBoxStyle.Critical, "Datos Faltantes")
             Else
-                AddToLog("Main", "Sending many...")
+                Utilidades.AddToLog("Main", "Sending many...")
                 Dim enviador As New MailSender.ManySender(Txb_Subject.Text, FastColoredTextBox1.Text)
+                'Dim threadSend = New Threading.Thread(Sub() enviador.SendAdmin())
+                'threadSend.Start()
                 enviador.SendAdmin()
             End If
+        End If
+    End Sub
+
+    Private Sub FastColoredTextBox1_DragDrop(sender As Object, e As DragEventArgs) Handles FastColoredTextBox1.DragDrop
+        Try
+            If e.Data.GetDataPresent(DataFormats.FileDrop) Then
+                Dim strRutaArchivos() As String
+                strRutaArchivos = e.Data.GetData(DataFormats.FileDrop)
+                ActualFilePath = strRutaArchivos(0)
+                OpenFile.FileName = strRutaArchivos(0)
+                SaveFile.FileName = strRutaArchivos(0)
+                FastColoredTextBox1.Text = My.Computer.FileSystem.ReadAllText(ActualFilePath)
+            End If
+        Catch ex As Exception
+            Utilidades.AddToLog("FastColoredTextBox1_DragDrop@Main", "Error: " & ex.Message, True)
+        End Try
+    End Sub
+    Private Sub FastColoredTextBox1_DragEnter(sender As Object, e As DragEventArgs) Handles FastColoredTextBox1.DragEnter
+        If e.Data.GetDataPresent(DataFormats.FileDrop) Then
+            e.Effect = DragDropEffects.All
         End If
     End Sub
 End Class

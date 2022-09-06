@@ -22,7 +22,7 @@ Namespace MailSender
             Me.toAddress = toAddress
             Me.bccAddress = bccAddress
             Me.ccAddress = ccAddress
-            AddToLog("OneSender", "OneSender instance created!")
+            Utilidades.AddToLog("OneSender", "OneSender instance created!")
         End Sub
 
         Sub SendIt() 'funciona. test v4 04/09/2022 03:01 AM
@@ -66,11 +66,11 @@ Namespace MailSender
                 MISMT.Port = MailInformation.emailPort
                 MISMT.Credentials = New Net.NetworkCredential(MailInformation.emailFrom, MailInformation.emailPassword) 'CREDENCIALES DEL ORIGEN
                 MISMT.Send(MENSAJE) 'ENVIA
-                MsgBox("Email sended succefully!", MsgBoxStyle.Information, "OneSender")
-                AddToLog("OneSender", "Email sended succefully!")
+                MsgBox("Email sended successfully!", MsgBoxStyle.Information, "OneSender")
+                Utilidades.AddToLog("OneSender", "Email sended successfully!")
             Catch ex As Exception
                 MsgBox(ex.Message, MsgBoxStyle.Critical, "One Sender")
-                AddToLog("SendIt@MailSender::OneSender", "Error: " & ex.Message, True)
+                Utilidades.AddToLog("SendIt@MailSender::OneSender", "Error: " & ex.Message, True)
             End Try
         End Sub
     End Class
@@ -81,7 +81,7 @@ Namespace MailSender
             Me.subject = subject
             Me.message = message
             CargarDestinatarios()
-            AddToLog("ManySender", "ManySender instance created!" &
+            Utilidades.AddToLog("ManySender", "ManySender instance created!" &
                      vbCrLf & "    " & toAddresses.Count & " Addresses")
         End Sub
         Sub CargarDestinatarios()
@@ -94,13 +94,14 @@ Namespace MailSender
                     toAddresses.Add(correo.Email)
                 Next
             Catch ex As Exception
-                AddToLog("CargarDestinatarios@MailSender::ManySender", "Error: " & ex.Message, True)
+                Utilidades.AddToLog("CargarDestinatarios@MailSender::ManySender", "Error: " & ex.Message, True)
             End Try
         End Sub
 
         Sub SendAdmin() 'funciona. test v0 04/09/2022 04:07 PM
             Try
                 If MessageBox.Show("¿Seguro que desea enviar este correo a " & toAddresses.Count & " direcciónes?", "Confirmar Enviar", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+                    Utilidades.AddToLog("ManySender", "Starting the sending to multiples emails...")
                     'Envio a direcciones destinatario
                     For Each destinatario As String In toAddresses
                         SendIt(destinatario)
@@ -109,11 +110,11 @@ Namespace MailSender
                     '   ?
                     'Envio a direcciones CC
                     '   ?
-                    MsgBox("Emails sended succefully!", MsgBoxStyle.Information, "Many Sender")
-                    AddToLog("ManySender", "Emails sended succefully!")
+                    Utilidades.AddToLog("ManySender", "Emails sended successfully!")
+                    MsgBox("Emails sended successfully!", MsgBoxStyle.Information, "Many Sender")
                 End If
             Catch ex As Exception
-                AddToLog("SendAdmin@MailSender::ManySender", "Error: " & ex.Message, True)
+                Utilidades.AddToLog("SendAdmin@MailSender::ManySender", "Error: " & ex.Message, True)
             End Try
         End Sub
 
@@ -135,9 +136,9 @@ Namespace MailSender
                 'https://stackoverflow.com/a/31807934
                 Dim pattern As String = "(?<=[\w]{3})[\w-\._\+%]*(?=[\w]{1}@)"
                 Dim result As String = Regex.Replace(emailAddress, pattern, Function(m) New String("*"c, m.Length))
-                AddToLog("ManySender", "Email sended to '" & result & "' succefully!")
+                Utilidades.AddToLog("ManySender", "Email sended to '" & result & "' successfully!")
             Catch ex As Exception
-                AddToLog("SendIt@MailSender::ManySender", "Error: " & ex.Message, True)
+                Utilidades.AddToLog("SendIt@MailSender::ManySender", "Error: " & ex.Message, True)
             End Try
         End Sub
     End Class

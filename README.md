@@ -1,5 +1,6 @@
 # MyWebMail-Sender
-Enviador de correos
+Enviador de correos.  
+Basado en el proyecto de Worcome: [Wor WebMail Sender](https://github.com/Worcome-Studios/WebMailSender)
 
 ## W h y ?
 Básicamente, porque necesito tener un programa que sea capaz de enviar correos con contenido HTML embebido.  

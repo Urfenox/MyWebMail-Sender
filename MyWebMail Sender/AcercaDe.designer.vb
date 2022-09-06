@@ -22,6 +22,7 @@ Partial Class AcercaDe
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(AcercaDe))
         Me.picLogo = New System.Windows.Forms.PictureBox()
         Me.lblAppDescription = New System.Windows.Forms.Label()
@@ -33,6 +34,7 @@ Partial Class AcercaDe
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.Label1 = New System.Windows.Forms.Label()
+        Me.myToolTip = New System.Windows.Forms.ToolTip(Me.components)
         CType(Me.picLogo, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pnlTitle.SuspendLayout()
         Me.gbItems.SuspendLayout()
@@ -51,6 +53,7 @@ Partial Class AcercaDe
         Me.picLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.picLogo.TabIndex = 0
         Me.picLogo.TabStop = False
+        Me.myToolTip.SetToolTip(Me.picLogo, "Ir al sitio web")
         '
         'lblAppDescription
         '
@@ -150,9 +153,9 @@ Partial Class AcercaDe
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(12, 9)
+        Me.Label1.Location = New System.Drawing.Point(12, 3)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(570, 250)
+        Me.Label1.Size = New System.Drawing.Size(570, 251)
         Me.Label1.TabIndex = 0
         Me.Label1.Text = resources.GetString("Label1.Text")
         '
@@ -190,4 +193,5 @@ Partial Class AcercaDe
     Friend WithEvents Label1 As Label
     Friend WithEvents Label3 As Label
     Friend WithEvents Label2 As Label
+    Friend WithEvents myToolTip As ToolTip
 End Class
