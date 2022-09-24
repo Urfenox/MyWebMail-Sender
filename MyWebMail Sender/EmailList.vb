@@ -14,6 +14,7 @@
         LeerLista()
         Txb_ID.Text = cCorreos
         RefreshLabel()
+        SelectItem(MailSender.MailInformation.emailID)
     End Sub
     Private Sub EmailList_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
         GenerarLista()
@@ -215,12 +216,19 @@
 
 #Region "View y Select"
     Private Sub ListBox1_MouseClick(sender As Object, e As MouseEventArgs) Handles ListBox1.MouseClick
+        SelectItem(ListBox1.SelectedIndex)
+    End Sub
+    Private Sub ListBox1_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles ListBox1.MouseDoubleClick
+        'seleccionar
+        SelectEmailAddress(iCorreos)
+    End Sub
+    Sub SelectItem(ByVal index As Integer)
         Try
-            If Not (ListBox1.SelectedIndex = -1) Then
+            If Not (index = -1) Then
                 'indicar que se puede editar el correo seleccionado
                 Btn_Save.Text = "Modificar"
                 'ver
-                iCorreos = ListBox1.SelectedIndex
+                iCorreos = index
 
                 Txb_ID.Text = myListaCorreos.Correos(iCorreos).ID
                 Txb_Email.Text = myListaCorreos.Correos(iCorreos).Email
@@ -233,15 +241,12 @@
                 Txb_StatusSSL.Text = myListaCorreos.Correos(iCorreos).StatusSSL
             End If
         Catch ex As Exception
-            Utilidades.AddToLog("ListBox1_MouseClick@EmailList", "Error: " & ex.Message, True)
+            Utilidades.AddToLog("SelectItem@EmailList", "Error: " & ex.Message, True)
         End Try
-    End Sub
-    Private Sub ListBox1_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles ListBox1.MouseDoubleClick
-        'seleccionar
-        SelectEmailAddress(iCorreos)
     End Sub
     Sub SelectEmailAddress(ByVal index As Integer)
         Try
+            Utilidades.Memory.MailServer_ID = index
             MailSender.MailInformation.emailID = myListaCorreos.Correos(index).ID
             MailSender.MailInformation.emailFrom = myListaCorreos.Correos(index).Email
             MailSender.MailInformation.emailIdentification = myListaCorreos.Correos(index).Identification
@@ -251,6 +256,7 @@
             MailSender.MailInformation.SSLEnabled = myListaCorreos.Correos(index).StatusSSL
             Utilidades.AddToLog("EmailList", "Email provider selected!")
             RefreshLabel()
+            SelectItem(index)
         Catch ex As Exception
             Utilidades.AddToLog("SelectEmailAddress@EmailList", "Error: " & ex.Message, True)
         End Try
@@ -269,6 +275,14 @@
         iCorreos = -1
         ListBox1.SelectedIndex = -1
         Btn_Save.Text = "Guardar"
+    End Sub
+
+    Private Sub Label6_Click(sender As Object, e As EventArgs) Handles Label6.Click
+        If Txb_Password.PasswordChar = "●" Then
+            Txb_Password.PasswordChar = Nothing
+        Else
+            Txb_Password.PasswordChar = "●"
+        End If
     End Sub
 #End Region
 

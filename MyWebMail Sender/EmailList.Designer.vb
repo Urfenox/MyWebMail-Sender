@@ -322,6 +322,7 @@ Partial Class EmailList
         '
         Me.Txb_Password.Location = New System.Drawing.Point(108, 96)
         Me.Txb_Password.Name = "Txb_Password"
+        Me.Txb_Password.PasswordChar = Global.Microsoft.VisualBasic.ChrW(9679)
         Me.Txb_Password.Size = New System.Drawing.Size(231, 20)
         Me.Txb_Password.TabIndex = 6
         '

@@ -84,7 +84,7 @@ Namespace Utilidades
                     vbCrLf & "Created=" & DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") &
                     vbCrLf &
                     vbCrLf & "[MailServer]" &
-                    vbCrLf & "ID=0" & MailServer_ID &
+                    vbCrLf & "ID=" & MailServer_ID &
                     vbCrLf &
                     vbCrLf & "[Main]" &
                     vbCrLf & "OpenPath=" & Main_OpenPath &
